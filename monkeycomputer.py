@@ -10,7 +10,7 @@ class computer():
         self.on = True
         self.filecounter = 0
         #actions
-        self.actions = {'oa': self.oa, 'ca': self.ca, 'exit': self.exit, 'help': self.help, 'search': self.search, 'note': self.note}
+        self.actions = {'oa': self.oa, 'ca': self.ca, 'exit': self.exit, 'help': self.help, 'search': self.search, 'note': self.note, 'of': self.of}
         #enter username
         # errors
         self.errors = {'usernametaken': '(error: username taken, enter a new username to continue)','applicationnotfound': '(error: application not found, enter a valid application name to continue)'}
@@ -79,7 +79,7 @@ class computer():
         if self.filecounter == 0:
             print('> Saving file...')
             time.sleep(1)
-            print('> File saved.')
+            print('> File saved to notepad.txt.')
             with open('notepad.txt', 'w') as f:
                 f.write(self.text)
                 self.filecounter = 1
@@ -89,7 +89,7 @@ class computer():
             if self.overwrite == 'y':
                 print('> Saving file...')
                 time.sleep(1)
-                print('> File saved.')
+                print('> File saved to notepad.txt.')
                 with open('notepad.txt', 'w') as f:
                     f.write(self.text)
                     self.filecounter = 1
@@ -98,7 +98,15 @@ class computer():
             else:
                 print('> Error: invalid input.')
                 pass
-    
+    def of(self):
+        self.openfile = input('> Enter the name of the file you want to open: ')
+        # open the file
+        with open(self.openfile, 'r') as f:
+            print(f.read())
+        # if file is not found, print error
+        if self.openfile not in os.listdir():
+            print('> Error: file not found.')
+            pass
     def help(self):
         print('> Error: invalid input.')
         time.sleep(0.3)
@@ -107,6 +115,8 @@ class computer():
         print('> ca: close application')
         time.sleep(0.3)
         print('> note: write a notepad file')
+        time.sleep(0.3)
+        print('> of: open file')
         time.sleep(0.3)
         print('> exit: exit')
         time.sleep(0.3)
